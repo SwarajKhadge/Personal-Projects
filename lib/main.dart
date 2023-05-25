@@ -25,6 +25,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   // clothes:5;
   // electronics:6;
   // furniture:7;
+  //All:8
 
   Color selectedColor = const Color.fromARGB(255, 0, 0, 0);
   Color notSelectedColor = Colors.grey;
@@ -37,6 +38,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     Colors.grey,
     Colors.grey,
     Colors.grey,
+    Colors.grey
   ];
   int selected = -1;
   bool viewOfList = false;
@@ -48,7 +50,8 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     'Washroom',
     'Clothes',
     'Electronics',
-    'Furniture'
+    'Furniture',
+    'All'
   ];
 
   List<Widget> categoryGiver() {
@@ -214,7 +217,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                   child: Row(
                     children: categoryGiver(),
                   ),
-                )
+                ),
               ],
             ),
           ),
