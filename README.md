@@ -1,4 +1,4 @@
-# shopping_app
+First git upload
 
 A new Flutter project.
 
