@@ -15,7 +15,7 @@ class ShoppingApp extends StatefulWidget {
 }
 
 class StateOfShoppingApp extends State<ShoppingApp> {
-  //category ka
+  //category ka no.
 
   // dailyFoodItems:0
   // bath:1
@@ -218,6 +218,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                     children: categoryGiver(),
                   ),
                 ),
+                
               ],
             ),
           ),
