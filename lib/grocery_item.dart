@@ -10,11 +10,12 @@ class GroceryItem {
 
 class Cart {
   Map<GroceryItem, int> finalCartItems = {};
-
+  double taxAmount = 0.0;
   List<Widget> returnDisplayCart = [];
   List<Widget> displayCart(
       Map<GroceryItem, int> cartItems, double finalAmount) {
-    finalAmount = finalAmount + 2.5 * finalAmount / 100;
+    taxAmount = finalAmount * 2.5 / 100;
+    finalAmount = finalAmount + taxAmount;
     returnDisplayCart.clear();
     returnDisplayCart.add(Text('Cart Amount: ${finalAmount.toStringAsFixed(2)}',
         style: const TextStyle(
