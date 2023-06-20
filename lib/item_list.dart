@@ -1,9 +1,15 @@
 import 'package:shopping_app/grocery_item.dart';
 
 class ItemList {
+  ItemList() {
+    for (int i = 0; i < pictureUrls.length; i++) {
+      completeItemList.add(GroceryItem(
+          pictureUrls[i], names[i], pricePerUnitOfEach[i], categories[i]));
+    }
+  }
   List<String> pictureUrls = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG1FkBrCS6gRsblaw5FIxCki1Lm0VS0HQFSw&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG8J70-c4b--qI3o2qXzSnlqfmJc5stGBCnA&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC7xxznldNDxVsrMn44bMKj2P4h9F7uLMrKQ&usqp=CAU',
     'https://www.jiomart.com/images/product/600x600/490031708/silver-coin-traditional-chakki-atta-10-kg-product-images-o490031708-p490031708-0-202206241206.jpg',
     'https://www.jiomart.com/images/product/600x600/490031707/silver-coin-traditional-chakki-atta-5-kg-product-images-o490031707-p490031707-0-202206241206.jpg',
     'https://www.jiomart.com/images/product/600x600/491349650/sharbati-wheat-10-kg-product-images-o491349650-p491349650-0-202205172239.jpg',
@@ -63,8 +69,8 @@ class ItemList {
     'https://ii3.pepperfry.com/media/catalog/product/a/v/1100x1210/avian-sheesham-wood-2-seater-dining-set-in-provincial-teak-finish-avian-sheesham-wood-2-seater-dinin-tfta0z.jpg'
   ];
 
-  List<int> pricePerUnitOfEach = [
-    422,
+  List<double> pricePerUnitOfEach = [
+    422.0,
     211,
     428,
     215,
@@ -246,13 +252,80 @@ class ItemList {
     7,
     7
   ];
-  List<GroceryItem> itemList = [];
 
-  List<GroceryItem> listgiver() {
-    for (int i = 0; i < pictureUrls.length; i++) {
-      itemList.add(GroceryItem(
-          pictureUrls[i], names[i], pricePerUnitOfEach[i], 0, categories[i]));
+  List<GroceryItem> completeItemList = [];
+  List<GroceryItem> toBeShownItemList = [];
+  List<GroceryItem> listGiver(int a) {
+    switch (a) {
+      case 0:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 0) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+
+      case 1:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 1) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 2:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 2) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 3:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 3) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 4:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 4) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 5:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 5) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 6:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 6) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+      case 7:
+        toBeShownItemList.clear();
+        for (GroceryItem gI in completeItemList) {
+          if (gI.category == 7) {
+            toBeShownItemList.add(gI);
+          }
+        }
+        return toBeShownItemList;
+
+      default:
+        toBeShownItemList.clear();
+        return completeItemList;
     }
-    return itemList;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'grocery_item.dart';
+import 'item_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,11 @@ class ShoppingApp extends StatefulWidget {
   }
 }
 
+Map<GroceryItem, int> cartItems = {};
+
 class StateOfShoppingApp extends State<ShoppingApp> {
+  Cart cart = Cart();
+  double totalAmount = 0;
   //category ka no.
 
   // dailyFoodItems:0
@@ -26,7 +31,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   // electronics:6;
   // furniture:7;
   //All:8
-
+  ItemList il = ItemList();
   Color selectedColor = const Color.fromARGB(255, 0, 0, 0);
   Color notSelectedColor = Colors.grey;
   List<Color> temp = [
@@ -40,7 +45,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     Colors.grey,
     Colors.grey
   ];
-  int selected = -1;
+  int selected = 8;
   bool viewOfList = false;
   List<String> categoryList = [
     'Food Essentials',
@@ -53,6 +58,113 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     'Furniture',
     'All'
   ];
+  void addItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        cartItems[gI] = cartItems[gI]! + 1;
+      } else {
+        cartItems[gI] = 1;
+      }
+      totalAmount += gI.pricePerUnit;
+    });
+  }
+
+  void clearItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        final toRemove = cartItems[gI];
+        cartItems.remove(gI);
+        totalAmount -= toRemove! * (gI.pricePerUnit);
+      }
+    });
+  }
+
+  void removeItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        if (cartItems[gI] == 1) {
+          cartItems.remove(gI);
+        } else {
+          cartItems[gI] = cartItems[gI]! - 1;
+        }
+        totalAmount -= gI.pricePerUnit;
+      }
+    });
+  }
+
+  List<Widget> displayItems() {
+    List<Widget> displayItemList = [];
+    List<GroceryItem> requiredList = il.listGiver(selected);
+    for (GroceryItem gI in requiredList) {
+      displayItemList.add(ListTile(
+          leading: Image.network(
+            gI.pictureUrl,
+            fit: BoxFit.fill,
+          ),
+          title: Text(gI.name, style: const TextStyle(fontFamily: 'a')),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Expanded(
+              child: Row(
+                children: [
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          iconColor:
+                              const MaterialStatePropertyAll(Colors.black),
+                          backgroundColor:
+                              const MaterialStatePropertyAll(Colors.white),
+                          shape: MaterialStateProperty.all<CircleBorder>(
+                              const CircleBorder(
+                                  side: BorderSide(
+                                      color: Color.fromARGB(255, 171, 60, 255),
+                                      width: 2)))),
+                      onPressed: () {
+                        addItems(gI);
+                      },
+                      child: const Icon(Icons.add)),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          iconColor:
+                              const MaterialStatePropertyAll(Colors.black),
+                          backgroundColor:
+                              const MaterialStatePropertyAll(Colors.white),
+                          shape: MaterialStateProperty.all<CircleBorder>(
+                              const CircleBorder(
+                                  side: BorderSide(
+                                      color: Colors.red, width: 2)))),
+                      onPressed: () {
+                        clearItems(gI);
+                      },
+                      child: Image.asset(
+                        'images/remove.png',
+                        width: 24,
+                        height: 24,
+                      )),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          iconColor:
+                              const MaterialStatePropertyAll(Colors.black),
+                          backgroundColor:
+                              const MaterialStatePropertyAll(Colors.white),
+                          shape: MaterialStateProperty.all<CircleBorder>(
+                              const CircleBorder(
+                                  side: BorderSide(
+                                      color: Colors.lime, width: 2)))),
+                      onPressed: () {
+                        removeItems(gI);
+                      },
+                      child: const Icon(Icons.remove))
+                ],
+              ),
+            ),
+          ),
+          trailing: Text(
+            '₹${gI.pricePerUnit}',
+            style: const TextStyle(fontFamily: 'a'),
+          )));
+    }
+    return displayItemList;
+  }
 
   List<Widget> categoryGiver() {
     List<Widget> categoryListGiver = [];
@@ -129,45 +241,34 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                           ),
                           Visibility(
                               visible: viewOfList,
-                              child: Container(
-                                  height: 600,
-                                  width: 290,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 255, 239, 100),
-                                      //List
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Column(children: const [
-                                    Text('Selected Items ',
-                                        style: TextStyle(
-                                            fontFamily: 'a',
-                                            color: Color.fromARGB(
-                                                255, 171, 60, 255),
-                                            fontSize: 18)),
-                                    //important
-                                  ]))),
-                          Visibility(
-                              visible: !viewOfList,
                               child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    SizedBox(height: 200),
-                                    Image(
-                                      opacity: AlwaysStoppedAnimation(1),
-                                      image: AssetImage('images/namaste.png'),
+                                  children:
+                                      cart.displayCart(cartItems, totalAmount)
+                                  //important
+                                  )),
+                          Visibility(
+                            visible: !viewOfList,
+                            child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 200),
+                                  Image(
+                                    opacity: AlwaysStoppedAnimation(1),
+                                    image: AssetImage('images/namaste.png'),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      'Namaste, you can view your Cart here',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          color: Color.fromARGB(96, 0, 0, 0),
+                                          fontSize: 24),
                                     ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        'Namaste, you can view your Cart here',
-                                        style: TextStyle(
-                                            fontFamily: 'a',
-                                            color: Color.fromARGB(96, 0, 0, 0),
-                                            fontSize: 24),
-                                      ),
-                                    )
-                                  ]))
+                                  ),
+                                ]),
+                          ),
                         ],
                       ),
                     )),
@@ -218,7 +319,9 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                     children: categoryGiver(),
                   ),
                 ),
-                
+                Column(
+                  children: displayItems(),
+                )
               ],
             ),
           ),
