@@ -104,7 +104,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: NetworkImage(gI.pictureUrl),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             )),
           ),
           Column(
