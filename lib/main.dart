@@ -115,7 +115,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                 children: [
                   Text(
                     gI.name,
-                    style: const TextStyle(fontFamily: 'a', fontSize: 16),
+                    style: const TextStyle(fontFamily: 'a', fontSize: 14),
                   ),
                 ],
               ),
@@ -137,9 +137,9 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                       child: IconButton(
                         iconSize: 17,
                         onPressed: () {
-                          addItems(gI);
+                          removeItems(gI);
                         },
-                        icon: const Icon(Icons.add),
+                        icon: const Icon(Icons.remove),
                       ),
                     ),
                   ),
@@ -175,9 +175,9 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                       child: IconButton(
                         iconSize: 17,
                         onPressed: () {
-                          removeItems(gI);
+                          addItems(gI);
                         },
-                        icon: const Icon(Icons.remove),
+                        icon: const Icon(Icons.add),
                       ),
                     ),
                   ),
@@ -220,6 +220,9 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData(
+          useMaterial3: false,
+        ),
         // scrollBehavior:
         // ScrollBehavior(),
         debugShowCheckedModeBanner: false,
