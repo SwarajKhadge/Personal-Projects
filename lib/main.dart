@@ -91,6 +91,14 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     });
   }
 
+  int getQuantity(GroceryItem gI) {
+    if (cartItems.containsKey(gI)) {
+      return cartItems[gI]!;
+    } else {
+      return 0;
+    }
+  }
+
   List<Widget> displayItems() {
     List<Widget> displayItemList = [];
     List<GroceryItem> requiredList = il.listGiver(selected);
@@ -119,58 +127,82 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const SizedBox(width: 40),
-                  Container(
+              Visibility(
+                visible: getQuantity(gI) > 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const SizedBox(width: 40),
+                    Container(
+                      height: 34,
+                      decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(blurRadius: 0.2, color: Colors.black26)
+                          ],
+                          color: Color.fromARGB(255, 240, 247, 222),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
+                      child: Center(
+                        child: IconButton(
+                          iconSize: 17,
+                          onPressed: () {
+                            removeItems(gI);
+                          },
+                          icon: const Icon(Icons.remove),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 34,
+                      width: 40,
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(blurRadius: 0.2, color: Colors.black26)
+                        ],
+                        color: Color.fromARGB(255, 240, 247, 222),
+                      ),
+                      child: Center(
+                        child: Text(getQuantity(gI).toString(),
+                            style:
+                                const TextStyle(fontFamily: 'a', fontSize: 14)),
+                      ),
+                    ),
+                    Container(
+                      height: 34,
+                      decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(blurRadius: 0.2, color: Colors.black26)
+                          ],
+                          color: Color.fromARGB(255, 240, 247, 222),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(5),
+                              bottomRight: Radius.circular(5))),
+                      child: Center(
+                        child: IconButton(
+                          iconSize: 17,
+                          onPressed: () {
+                            addItems(gI);
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Visibility(
+                  visible: getQuantity(gI) == 0,
+                  child: Container(
                     height: 34,
                     decoration: const BoxDecoration(
                         boxShadow: [
                           BoxShadow(blurRadius: 0.2, color: Colors.black26)
                         ],
                         color: Color.fromARGB(255, 240, 247, 222),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5))),
-                    child: Center(
-                      child: IconButton(
-                        iconSize: 17,
-                        onPressed: () {
-                          removeItems(gI);
-                        },
-                        icon: const Icon(Icons.remove),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 34,
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                      ],
-                      color: Color.fromARGB(255, 240, 247, 222),
-                    ),
-                    child: Center(
-                      child: IconButton(
-                        iconSize: 17,
-                        onPressed: () {
-                          clearItems(gI);
-                        },
-                        icon: const Icon(Icons.delete),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 34,
-                    decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                        ],
-                        color: Color.fromARGB(255, 240, 247, 222),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(5),
-                            bottomRight: Radius.circular(5))),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Center(
                       child: IconButton(
                         iconSize: 17,
@@ -181,7 +213,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                       ),
                     ),
                   ),
-                ],
+                ),
               )
             ],
           )
@@ -358,3 +390,239 @@ class StateOfShoppingApp extends State<ShoppingApp> {
         ));
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+
+// void main() {
+//   runApp(const Recipe());
+// }
+
+// class Recipe extends StatelessWidget {
+//   const Recipe({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData(
+//         brightness: Brightness.light,
+//         colorScheme: ColorScheme.fromSeed(
+//           seedColor: Colors.purple,
+//         ),
+//         useMaterial3: true,
+//       ),
+//       home: Recipe(),
+//     );
+//   }
+// }
+
+// List<Categories> category = [
+//   Categories(
+//       'https://cdn.dribbble.com/userupload/8335522/file/original-eb4fe06026d4ecb8563f87317559d1a1.png?compress=1&resize=752x',
+//       "omkar"),
+//   Categories(
+//       'https://cdn.dribbble.com/userupload/8335522/file/original-eb4fe06026d4ecb8563f87317559d1a1.png?compress=1&resize=752x',
+//       "name"),
+//   Categories(
+//       'https://cdn.dribbble.com/userupload/8335522/file/original-eb4fe06026d4ecb8563f87317559d1a1.png?compress=1&resize=752x',
+//       "name"),
+//   Categories(
+//       'https://cdn.dribbble.com/userupload/8335522/file/original-eb4fe06026d4ecb8563f87317559d1a1.png?compress=1&resize=752x',
+//       "name"),
+//   Categories(
+//       'https://cdn.dribbble.com/userupload/8335522/file/original-eb4fe06026d4ecb8563f87317559d1a1.png?compress=1&resize=752x',
+//       "name")
+// ];
+// List<Recommendation> recommend = [
+//   Recommendation("oijbnsoefi", "omkar"),
+//   Recommendation("oijbnsoefi", "omkar"),
+//   Recommendation("oijbnsoefi", "omkar"),
+//   Recommendation("oijbnsoefi", "omkar"),
+//   Recommendation("oijbnsoefi", "omkar"),
+// ];
+
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({super.key});
+//   @override
+//   State<MyHomePage> createState() => _MyHomePage();
+// }
+
+// class _MyHomePage extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Hello Omkar")),
+//       body: SingleChildScrollView(
+//         child: Container(
+//           decoration: const BoxDecoration(
+//             gradient: LinearGradient(
+//               colors: [Colors.black, Colors.red],
+//               begin: Alignment.bottomLeft,
+//               end: Alignment.topRight,
+//             ),
+//           ),
+//           child: Column(
+//             children: [
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                 children: [
+//                   Column(
+//                     mainAxisAlignment: MainAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         "What would you like",
+//                         style: TextStyle(fontSize: 30),
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(right: 88.0),
+//                         child: const Text(
+//                           "to cook today?",
+//                           style: TextStyle(fontSize: 30),
+//                         ),
+//                       )
+//                     ],
+//                   ),
+//                   CircleAvatar(
+//                     backgroundColor: Colors.red,
+//                     maxRadius: 23,
+//                   ),
+//                 ],
+//               ),
+//               Container(
+//                 width: 375,
+//                 height: 70,
+//                 decoration: BoxDecoration(
+//                     color: Colors.green,
+//                     borderRadius: BorderRadius.circular(25)),
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(
+//                     "Categories",
+//                     style: TextStyle(fontSize: 25),
+//                   ),
+//                   Text(
+//                     "See all",
+//                     style: TextStyle(fontSize: 15),
+//                   )
+//                 ],
+//               ),
+//               SizedBox(
+//                 width: 580,
+//                 height: 110,
+//                 child: ListView.builder(
+//                   scrollDirection: Axis.horizontal,
+//                   itemBuilder: (context, index) {
+//                     return Padding(
+//                       padding: const EdgeInsets.only(right: 20.0),
+//                       child: Card(
+//                           elevation: 10,
+//                           shadowColor: Colors.black,
+//                           child: ClipRRect(
+//                               borderRadius: BorderRadius.circular(18),
+//                               child: Image.network(
+//                                   'https://i.pinimg.com/564x/71/f2/68/71f268e9134132ac73440607ac975413.jpg'))),
+//                     );
+//                   },
+//                   itemCount: category.length,
+//                 ),
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(
+//                     "Recommendation",
+//                     style: TextStyle(fontSize: 25),
+//                     textAlign: TextAlign.start,
+//                   ),
+//                   Text("See all", style: TextStyle(fontSize: 15))
+//                 ],
+//               ),
+//               SizedBox(
+//                 width: 900,
+//                 height: 280,
+//                 child: ListView.builder(
+//                   scrollDirection: Axis.horizontal,
+//                   itemBuilder: (context, index) {
+//                     return Padding(
+//                       padding: const EdgeInsets.only(right: 10.0),
+//                       child: Card(
+//                         elevation: 10,
+//                         shadowColor: Colors.black,
+//                         shape: ContinuousRectangleBorder(
+//                             borderRadius: BorderRadius.circular(20)),
+//                         child: Column(
+//                           children: [
+//                             Container(
+//                                 height: 235,
+//                                 child: ClipRRect(
+//                                     borderRadius: BorderRadius.circular(20),
+//                                     child: Image.network(
+//                                         'https://i.pinimg.com/564x/71/f2/68/71f268e9134132ac73440607ac975413.jpg'))),
+//                             Expanded(child: Text(recommend[index].name))
+//                           ],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                   itemCount: category.length,
+//                 ),
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     "Recipies Of The Week",
+//                     style: TextStyle(fontSize: 25),
+//                   ),
+//                 ],
+//               ),
+//               SizedBox(
+//                 width: 700,
+//                 height: 300,
+//                 child: ListView.builder(
+//                   scrollDirection: Axis.horizontal,
+//                   itemBuilder: (context, index) {
+//                     return Padding(
+//                       padding: const EdgeInsets.only(right: 20.0),
+//                       child: Container(
+//                         width: 200,
+//                         height: 200,
+//                         child: Column(
+//                           children: [
+//                             Container(
+//                                 width: 200,
+//                                 height: 90,
+//                                 child: Image.network(
+//                                   'https://i.pinimg.com/564x/71/f2/68/71f268e9134132ac73440607ac975413.jpg',
+//                                   fit: BoxFit.fill,
+//                                 )),
+//                             Expanded(child: Text(recommend[index].name))
+//                           ],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                   itemCount: category.length,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class Categories {
+//   final String imageurl;
+//   final String name;
+
+//   Categories(this.imageurl, this.name);
+// }
+
+// class Recommendation {
+//   final String imageurl;
+//   final String name;
+//   Recommendation(this.imageurl, this.name);
+// }
