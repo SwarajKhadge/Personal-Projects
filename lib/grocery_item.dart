@@ -26,14 +26,20 @@ class Cart {
       returnDisplayCart.add(SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Card(
-          child: Expanded(
-            child: Row(
-              children: [
-                Text(
-                  '${key.name}, Quantity:$value',
-                  style: const TextStyle(fontFamily: 'a'),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 30,
+              child: Expanded(
+                child: Row(
+                  children: [
+                    Text(
+                      '${key.name}, Quantity:$value Amount:${(value * key.pricePerUnit).toInt()}',
+                      style: const TextStyle(fontFamily: 'a'),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
