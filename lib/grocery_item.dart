@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/item_list.dart';
 
 class GroceryItem {
   String pictureUrl;
@@ -9,20 +10,26 @@ class GroceryItem {
 }
 
 class Cart {
-  Map<GroceryItem, int> finalCartItems = {};
+  ItemList itemList = ItemList();
+  double finalAmount = 0.0;
   double taxAmount = 0.0;
   List<Widget> returnDisplayCart = [];
-  List<Widget> displayCart(
-      Map<GroceryItem, int> cartItems, double finalAmount) {
-    taxAmount = finalAmount * 2.5 / 100;
-    finalAmount = finalAmount + taxAmount;
+  List<Widget> displayCart(Map<GroceryItem, int> cartItems, finalAmount) {
+    Map<int, double> getTax = itemList.taxPercentage;
+
     returnDisplayCart.clear();
-    returnDisplayCart.add(Text('Cart Amount: ${finalAmount.toStringAsFixed(2)}',
-        style: const TextStyle(
-            fontFamily: 'a',
-            color: Color.fromARGB(255, 171, 60, 255),
-            fontSize: 18)));
+    returnDisplayCart.add(Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Text('Cart Amount: ${finalAmount.toStringAsFixed(2)}',
+          style: const TextStyle(
+              fontFamily: 'a',
+              color: Color.fromARGB(255, 171, 60, 255),
+              fontSize: 18)),
+    ));
     cartItems.forEach((key, value) {
+      taxAmount =
+          taxAmount + value * key.pricePerUnit * getTax[key.category]! / 100;
+      finalAmount += taxAmount;
       returnDisplayCart.add(SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Card(
@@ -34,7 +41,7 @@ class Cart {
                 child: Row(
                   children: [
                     Text(
-                      '${key.name}, Quantity:$value Amount:${(value * key.pricePerUnit).toInt()}',
+                      '${key.name}, Quantity:$value  Amount:${(value * key.pricePerUnit).toInt()}  Tax Amount:${(value * key.pricePerUnit * getTax[key.category]! / 100).toStringAsFixed(1)}',
                       style: const TextStyle(fontFamily: 'a'),
                     ),
                   ],

@@ -1,7 +1,24 @@
 import 'package:shopping_app/grocery_item.dart';
+//category ka no.
+// dailyFoodItems:0
+// bath:1
+// snacks=2
+//toys:3
+// washroom:4;
+// clothes:5;
+// electronics:6;
+// furniture:7;
+//All:8
 
 class ItemList {
+  Map<int, double> taxPercentage = {};
+  List<double> taxInfo = [5, 18, 12, 12, 28, 12, 28, 12];
+
   ItemList() {
+    for (int i = 0; i < 8; i++) {
+      taxPercentage[i] = taxInfo[i];
+    }
+
     for (int i = 0; i < pictureUrls.length; i++) {
       completeItemList.add(GroceryItem(
           pictureUrls[i], names[i], pricePerUnitOfEach[i], categories[i]));

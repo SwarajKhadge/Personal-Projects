@@ -9,19 +9,26 @@ class CartPage extends StatelessWidget {
   Cart cart = Cart();
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
-        appBar: AppBar(title: const Text('Cart Items'),actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_left),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+        appBar: AppBar(
+          title: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Text('Cart Items'),
+              ),
+            ],
           ),
-        ]),
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: cart.displayCart(cartItems, totalAmount),
