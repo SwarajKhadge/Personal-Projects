@@ -33,7 +33,7 @@ class CartPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: cart.displayCart(cartItems, totalAmount),
+            children: cart.displayCart(cartItems, totalAmount, context),
           ),
         ),
       ),

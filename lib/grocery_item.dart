@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/buy_page.dart';
 
 import 'package:shopping_app/item_list.dart';
 
@@ -17,9 +18,10 @@ class Cart {
   double finalAmount = 0.0;
   double taxAmount = 0.0;
   List<Widget> returnDisplayCart = [];
-  List<Widget> displayCart(Map<GroceryItem, int> cartItems, finalAmount) {
+  List<Widget> displayCart(
+      Map<GroceryItem, int> cartItems, finalAmount, BuildContext context) {
     Map<int, double> getTax = itemList.taxPercentage;
-
+    Map<GroceryItem, int> finalCartItems = cartItems;
     returnDisplayCart.clear();
     returnDisplayCart.add(Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -77,7 +79,13 @@ class Cart {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) =>
+                            BuyPage(finalAmount, taxAmount, finalCartItems))));
+              },
               child: const Text(
                 'Buy Now',
                 style: TextStyle(
