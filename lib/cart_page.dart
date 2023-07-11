@@ -14,6 +14,7 @@ class CartPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 171, 60, 255),
           title: Row(
             children: [
               IconButton(
@@ -29,9 +30,11 @@ class CartPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: cart.displayCart(cartItems, totalAmount),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: cart.displayCart(cartItems, totalAmount),
+          ),
         ),
       ),
     );

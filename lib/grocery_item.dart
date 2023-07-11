@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:shopping_app/item_list.dart';
 
 class GroceryItem {
@@ -6,7 +7,9 @@ class GroceryItem {
   double pricePerUnit;
   String name;
   int category;
-  GroceryItem(this.pictureUrl, this.name, this.pricePerUnit, this.category);
+  String information;
+  GroceryItem(this.pictureUrl, this.name, this.pricePerUnit, this.information,
+      this.category);
 }
 
 class Cart {
@@ -52,6 +55,41 @@ class Cart {
         ),
       ));
     });
+
+    returnDisplayCart.add(Visibility(
+      visible: cartItems.isEmpty,
+      child: Center(
+          child: Column(
+        children: [
+          Image.asset('images/error.png'),
+          const Text(
+            'No Items in Cart',
+            style:
+                TextStyle(fontFamily: 'a', color: Colors.black, fontSize: 18),
+          )
+        ],
+      )),
+    ));
+    returnDisplayCart.add(
+      Visibility(
+        visible: cartItems.isNotEmpty,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Buy Now',
+                style: TextStyle(
+                    fontFamily: 'a',
+                    color: Color.fromARGB(255, 171, 60, 255),
+                    fontSize: 18),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     return returnDisplayCart;
   }
 }

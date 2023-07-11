@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shopping_app/information_of_product.dart';
 
 import 'cart_page.dart';
 import 'grocery_item.dart';
@@ -98,133 +99,155 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     }
   }
 
+  void addItemsForOther(GroceryItem gI) {
+    addItems(gI);
+  }
+
   List<Widget> displayItems() {
     List<Widget> displayItemList = [];
     List<GroceryItem> requiredList = il.listGiver(selected);
     for (GroceryItem gI in requiredList) {
-      displayItemList.add(InkWell(
-        onTap: () {},
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              height: 75,
-              width: 75,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: NetworkImage(gI.pictureUrl),
-                fit: BoxFit.cover,
-              )),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      displayItemList.add(Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                if (cartItems.containsKey(gI)) {
+                  return InformationOfProduct(gI: gI, quantity: cartItems[gI]!);
+                } else {
+                  return InformationOfProduct(gI: gI, quantity: 0);
+                }
+              }));
+            },
+            child: Row(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  height: 75,
+                  width: 75,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: NetworkImage(gI.pictureUrl),
+                    fit: BoxFit.cover,
+                  )),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      gI.name,
-                      style: const TextStyle(fontFamily: 'a', fontSize: 14),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          gI.name,
+                          style: const TextStyle(fontFamily: 'a', fontSize: 14),
+                        ),
+                      ],
                     ),
+                    Visibility(
+                      visible: getQuantity(gI) > 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const SizedBox(width: 40),
+                          Container(
+                            height: 34,
+                            decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 0.2, color: Colors.black26)
+                                ],
+                                color: Color.fromARGB(255, 240, 247, 222),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
+                            child: Center(
+                              child: IconButton(
+                                iconSize: 17,
+                                onPressed: () {
+                                  removeItems(gI);
+                                },
+                                icon: const Icon(Icons.remove),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 34,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 0.2, color: Colors.black26)
+                              ],
+                              color: Color.fromARGB(255, 240, 247, 222),
+                            ),
+                            child: Center(
+                              child: Text(getQuantity(gI).toString(),
+                                  style: const TextStyle(
+                                      fontFamily: 'a', fontSize: 14)),
+                            ),
+                          ),
+                          Container(
+                            height: 34,
+                            decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 0.2, color: Colors.black26)
+                                ],
+                                color: Color.fromARGB(255, 240, 247, 222),
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
+                            child: Center(
+                              child: IconButton(
+                                iconSize: 17,
+                                onPressed: () {
+                                  addItems(gI);
+                                },
+                                icon: const Icon(Icons.add),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Visibility(
+                        visible: getQuantity(gI) == 0,
+                        child: Container(
+                          height: 34,
+                          decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 0.2, color: Colors.black26)
+                              ],
+                              color: Color.fromARGB(255, 240, 247, 222),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: TextButton(
+                              onPressed: () {
+                                addItems(gI);
+                              },
+                              child: const Text(
+                                'Add to Cart',
+                                style: TextStyle(
+                                    fontFamily: 'a',
+                                    fontSize: 12,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
-                ),
-                Visibility(
-                  visible: getQuantity(gI) > 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const SizedBox(width: 40),
-                      Container(
-                        height: 34,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                            ],
-                            color: Color.fromARGB(255, 240, 247, 222),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5))),
-                        child: Center(
-                          child: IconButton(
-                            iconSize: 17,
-                            onPressed: () {
-                              removeItems(gI);
-                            },
-                            icon: const Icon(Icons.remove),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 34,
-                        width: 40,
-                        decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                          ],
-                          color: Color.fromARGB(255, 240, 247, 222),
-                        ),
-                        child: Center(
-                          child: Text(getQuantity(gI).toString(),
-                              style: const TextStyle(
-                                  fontFamily: 'a', fontSize: 14)),
-                        ),
-                      ),
-                      Container(
-                        height: 34,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                            ],
-                            color: Color.fromARGB(255, 240, 247, 222),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                bottomRight: Radius.circular(5))),
-                        child: Center(
-                          child: IconButton(
-                            iconSize: 17,
-                            onPressed: () {
-                              addItems(gI);
-                            },
-                            icon: const Icon(Icons.add),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Visibility(
-                    visible: getQuantity(gI) == 0,
-                    child: Container(
-                      height: 34,
-                      decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(blurRadius: 0.2, color: Colors.black26)
-                          ],
-                          color: Color.fromARGB(255, 240, 247, 222),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Center(
-                        child: TextButton(
-                          onPressed: () {
-                            addItems(gI);
-                          },
-                          child: const Text(
-                            'Add to Cart',
-                            style: TextStyle(
-                                fontFamily: 'a',
-                                fontSize: 12,
-                                color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          const Divider()
+        ],
       ));
     }
     return displayItemList;
@@ -259,80 +282,10 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-          width: 300,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        TextButton.icon(
-                            style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 255, 240, 102)),
-                              // maximumSize: MaterialStatePropertyAll(
-                              //   Size.fromRadius(20))
-                            ),
-                            icon: const Icon(
-                              Icons.shopping_cart,
-                              color: Color.fromARGB(255, 171, 60, 255),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      CartPage(cartItems, totalAmount)));
-                            },
-                            label: const Text(
-                              'View Cart',
-                              style: TextStyle(
-                                  fontFamily: 'a',
-                                  color: Color.fromARGB(255, 171, 60, 255),
-                                  fontSize: 24),
-                            )),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Visibility(
-                            visible: viewOfList,
-                            child: Column(
-                                children:
-                                    cart.displayCart(cartItems, totalAmount)
-                                //important
-                                )),
-                        const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(height: 200),
-                              Image(
-                                opacity: AlwaysStoppedAnimation(1),
-                                image: AssetImage('images/namaste.png'),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  'Namaste, you can view your Cart here',
-                                  style: TextStyle(
-                                      fontFamily: 'a',
-                                      color: Color.fromARGB(96, 0, 0, 0),
-                                      fontSize: 24),
-                                ),
-                              ),
-                            ]),
-                      ],
-                    ),
-                  ),
-                )),
-          )),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 171, 60, 255),
-        title: Align(
-          alignment: Alignment.topCenter,
-          child: Row(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 171, 60, 255),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(width: 56),
               Image.asset(
@@ -353,33 +306,52 @@ class StateOfShoppingApp extends State<ShoppingApp> {
               )
             ],
           ),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                exit(0);
-              },
-              icon: Image.asset(
-                'images/exit.png',
-                color: Colors.white,
-              ))
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: categoryGiver(),
-              ),
-            ),
-            Column(
-              children: displayItems(),
-            )
+          actions: [
+            IconButton(
+                onPressed: () {
+                  exit(0);
+                },
+                icon: Image.asset(
+                  'images/exit.png',
+                  color: Colors.white,
+                ))
           ],
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: categoryGiver(),
+                ),
+              ),
+              Column(
+                children: displayItems(),
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CartPage(cartItems, totalAmount)));
+          },
+          style: const ButtonStyle(
+            iconColor: MaterialStatePropertyAll(
+              Color.fromARGB(255, 255, 239, 100),
+            ),
+            elevation: MaterialStatePropertyAll(10),
+            iconSize: MaterialStatePropertyAll(26),
+            fixedSize: MaterialStatePropertyAll(Size(50, 50)),
+            shape: MaterialStatePropertyAll(CircleBorder()),
+            backgroundColor: MaterialStatePropertyAll(
+              Color.fromARGB(255, 171, 60, 255),
+            ),
+          ),
+          child: const Icon(
+            Icons.shopping_cart,
+          ),
+        ));
   }
 }
