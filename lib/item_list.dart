@@ -152,12 +152,12 @@ class ItemList {
     25000
   ];
   List<String> names = [
-    'Aashirvaad Superior MP Wheat Atta: 10 kgs',
-    'Aashirvaad Superior MP Wheat Atta: 5 Kgs',
-    'Silver Coin Atta 10 kgs',
-    'Silver Coin Atta 5 kgs',
-    'Sharbati Wheat 10 kg',
-    'Lokwan Wheat 10 kg',
+    'Aashirvaad Superior MP Wheat Atta: 10kgs',
+    'Aashirvaad Superior MP Wheat Atta: 5Kgs',
+    'SilverCoin Atta 10kgs',
+    'SilverCoin Atta 5kgs',
+    'SharbatiWheat 10kg',
+    'LokwanWheat 10kg',
     'Master Cook Kolam Steam Rice(Kolam)',
     'Golden Ramarajyam Black(Kolam)',
     'Surti Kolam Rice 10 kg',

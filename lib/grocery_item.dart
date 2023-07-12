@@ -78,7 +78,13 @@ class Cart {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
+            TextButton.icon(
+              style: TextButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 171, 60, 255)),
+              icon: const Icon(
+                Icons.shopping_bag_outlined,
+                color: Color.fromARGB(255, 255, 239, 100),
+              ),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -86,11 +92,11 @@ class Cart {
                         builder: ((context) =>
                             BuyPage(finalAmount, taxAmount, finalCartItems))));
               },
-              child: const Text(
+              label: const Text(
                 'Buy Now',
                 style: TextStyle(
                     fontFamily: 'a',
-                    color: Color.fromARGB(255, 171, 60, 255),
+                    color: Color.fromARGB(255, 255, 239, 100),
                     fontSize: 18),
               ),
             ),

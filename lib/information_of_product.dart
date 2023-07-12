@@ -80,7 +80,7 @@ class InformationOfProductState extends State<InformationOfProduct> {
                           const SizedBox(
                             width: double.maxFinite,
                           ),
-                         ]),
+                        ]),
                   ),
                 ))
           ],
