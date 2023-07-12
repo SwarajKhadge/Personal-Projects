@@ -31,13 +31,9 @@ class StateofPopUp extends State<PopUp> {
     });
   }
 
-  int minutes() {
-    return (start / 60).floor();
-  }
+  int minutes() => (start / 60).floor();
 
-  int seconds() {
-    return start % 60;
-  }
+  int seconds() => start % 60;
 
   @override
   Widget build(BuildContext context) {
