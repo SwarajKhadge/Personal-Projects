@@ -97,7 +97,6 @@ class BuyPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(width: 56),
                             Image.asset(
@@ -119,16 +118,29 @@ class BuyPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Table(
-                        columnWidths: const <int, TableColumnWidth>{
-                          0: IntrinsicColumnWidth(flex: 5),
-                          1: IntrinsicColumnWidth(flex: 2),
-                          2: IntrinsicColumnWidth(flex: 2),
-                        },
-                        border: TableBorder.all(color: Colors.black54),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: tableGiver(),
+                      const SizedBox(
+                        height: 21,
+                        child: Text(
+                          'Bill',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontFamily: 'a',
+                              fontSize: 20),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: IntrinsicColumnWidth(flex: 5),
+                            1: IntrinsicColumnWidth(flex: 2),
+                            2: IntrinsicColumnWidth(flex: 2),
+                          },
+                          border: TableBorder.all(color: Colors.black54),
+                          defaultVerticalAlignment:
+                              TableCellVerticalAlignment.middle,
+                          children: tableGiver(),
+                        ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

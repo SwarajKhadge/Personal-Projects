@@ -51,7 +51,7 @@ class StateofPopUp extends State<PopUp> {
               builder: (BuildContext context) {
                 return AlertDialog(
                     title: const Text(
-                      'Order Complete?',
+                      'Ready to Order?',
                       style: TextStyle(fontFamily: 'a', fontSize: 12),
                     ),
                     actions: [
@@ -94,7 +94,7 @@ class StateofPopUp extends State<PopUp> {
           child: Column(
             children: [
               const Text(
-                'Please Complete your order in by accepting in Your UPI App:',
+                'Please Complete your order  by accepting in Your UPI App:',
                 style: TextStyle(fontFamily: 'a', fontSize: 14),
               ),
               Text(

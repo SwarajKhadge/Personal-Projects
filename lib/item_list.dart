@@ -15,7 +15,7 @@ class ItemList {
   List<double> taxInfo = [5, 18, 12, 12, 28, 12, 28, 12];
 
   ItemList() {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < taxInfo.length; i++) {
       taxPercentage[i] = taxInfo[i];
     }
 
