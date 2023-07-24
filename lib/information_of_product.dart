@@ -5,24 +5,71 @@ import 'grocery_item.dart';
 
 // ignore: must_be_immutable
 class InformationOfProduct extends StatefulWidget {
+  Map<GroceryItem, int> cartItems = {};
+  double totalAmount;
   GroceryItem gI;
   int quantity;
-  InformationOfProduct({required this.gI, required this.quantity, super.key});
-
+  InformationOfProduct(this.update, this.cartItems, this.totalAmount,
+      {required this.gI, required this.quantity, super.key});
+  final ValueChanged<Map<GroceryItem, int>> update;
   @override
   State<InformationOfProduct> createState() {
     // ignore: no_logic_in_create_state
-    return InformationOfProductState(gI, quantity);
+    return InformationOfProductState(
+        gI, quantity, update, cartItems, totalAmount);
   }
 }
 
 class InformationOfProductState extends State<InformationOfProduct> {
+  Map<GroceryItem, int> cartItems = {};
+  double totalAmount;
+  void addItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        cartItems[gI] = cartItems[gI]! + 1;
+      } else {
+        cartItems[gI] = 1;
+      }
+      totalAmount += gI.pricePerUnit;
+    });
+  }
+
+  void clearItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        final toRemove = cartItems[gI];
+        cartItems.remove(gI);
+        totalAmount -= toRemove! * (gI.pricePerUnit);
+      }
+    });
+  }
+
+  void removeItems(GroceryItem gI) {
+    setState(() {
+      if (cartItems.containsKey(gI)) {
+        if (cartItems[gI] == 1) {
+          cartItems.remove(gI);
+        } else {
+          cartItems[gI] = cartItems[gI]! - 1;
+        }
+        totalAmount -= gI.pricePerUnit;
+      }
+    });
+  }
+
+  int getQuantity(GroceryItem gI) {
+    if (cartItems.containsKey(gI)) {
+      return cartItems[gI]!;
+    } else {
+      return 0;
+    }
+  }
+
+  final ValueChanged<Map<GroceryItem, int>> update;
   GroceryItem gI;
   int quantity;
   InformationOfProductState(
-    this.gI,
-    this.quantity,
-  );
+      this.gI, this.quantity, this.update, this.cartItems, this.totalAmount);
   StateOfShoppingApp stateOfShoppingApp = StateOfShoppingApp();
   @override
   Widget build(BuildContext context) {
@@ -80,6 +127,27 @@ class InformationOfProductState extends State<InformationOfProduct> {
                           const SizedBox(
                             width: double.maxFinite,
                           ),
+                          Row(
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) {
+                                  return const LinearGradient(colors: [
+                                    Color.fromARGB(255, 102, 255, 168),
+                                    Color.fromARGB(255, 30, 123, 70),
+                                  ]).createShader(bounds);
+                                },
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      addItems(gI);
+                                      update(cartItems);
+                                    },
+                                    child: const Text(
+                                      'Add to Cart',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              )
+                            ],
+                          )
                         ]),
                   ),
                 ))

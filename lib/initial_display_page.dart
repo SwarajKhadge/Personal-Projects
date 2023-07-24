@@ -15,9 +15,8 @@ class ShoppingApp extends StatefulWidget {
   }
 }
 
-Map<GroceryItem, int> cartItems = {};
-
 class StateOfShoppingApp extends State<ShoppingApp> {
+  Map<GroceryItem, int> cartItems = {};
   Cart cart = Cart();
   double totalAmount = 0;
   //category ka no.
@@ -57,6 +56,12 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     'Furniture',
     'All'
   ];
+  void _update(Map<GroceryItem, int> cartItems) {
+    setState(() {
+      this.cartItems = cartItems;
+    });
+  }
+
   void addItems(GroceryItem gI) {
     setState(() {
       if (cartItems.containsKey(gI)) {
@@ -99,10 +104,6 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     }
   }
 
-  void addItemsForOther(GroceryItem gI) {
-    addItems(gI);
-  }
-
   List<Widget> displayItems() {
     List<Widget> displayItemList = [];
     List<GroceryItem> requiredList = il.listGiver(selected);
@@ -113,9 +114,15 @@ class StateOfShoppingApp extends State<ShoppingApp> {
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 if (cartItems.containsKey(gI)) {
-                  return InformationOfProduct(gI: gI, quantity: cartItems[gI]!);
+                  return InformationOfProduct(
+                      gI: gI,
+                      quantity: cartItems[gI]!,
+                      _update,
+                      cartItems,
+                      totalAmount);
                 } else {
-                  return InformationOfProduct(gI: gI, quantity: 0);
+                  return InformationOfProduct(
+                      _update, gI: gI, quantity: 0, cartItems, totalAmount);
                 }
               }));
             },
