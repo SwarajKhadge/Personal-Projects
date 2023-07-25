@@ -77,6 +77,8 @@ class InformationOfProductState extends State<InformationOfProduct> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -84,74 +86,101 @@ class InformationOfProductState extends State<InformationOfProduct> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back))
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ))
             ],
           ),
-          backgroundColor: const Color.fromARGB(255, 171, 60, 255),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              flex: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    image: DecorationImage(image: NetworkImage(gI.pictureUrl)),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: 600,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white10,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          image: DecorationImage(
+                              image: NetworkImage(gI.pictureUrl)),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                      flex: 3,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  gI.name,
+                                  style: const TextStyle(
+                                      fontFamily: 'a', fontSize: 14),
+                                ),
+                                Text(
+                                  gI.information,
+                                  style: TextStyle(
+                                      fontFamily: 'a',
+                                      fontSize: 12,
+                                      color: Colors.grey.withOpacity(0.7)),
+                                ),
+                                const SizedBox(
+                                  width: double.maxFinite,
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        onTap: () {
+                                          addItems(gI);
+                                          update(cartItems);
+                                        },
+                                        child: Ink(
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                gradient: const LinearGradient(
+                                                    colors: [
+                                                      Color.fromARGB(
+                                                          255, 99, 222, 152),
+                                                      Color.fromARGB(
+                                                          255, 41, 175, 100),
+                                                    ])),
+                                            child: const Center(
+                                              child: Text(
+                                                'Add to Cart',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'a',
+                                                    fontSize: 12),
+                                              ),
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ]),
+                        ),
+                      ))
+                ],
               ),
             ),
-            Expanded(
-                flex: 3,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            gI.name,
-                            style:
-                                const TextStyle(fontFamily: 'a', fontSize: 14),
-                          ),
-                          Text(
-                            gI.information,
-                            style: TextStyle(
-                                fontFamily: 'a',
-                                fontSize: 12,
-                                color: Colors.grey.withOpacity(0.7)),
-                          ),
-                          const SizedBox(
-                            width: double.maxFinite,
-                          ),
-                          Row(
-                            children: [
-                              ShaderMask(
-                                shaderCallback: (bounds) {
-                                  return const LinearGradient(colors: [
-                                    Color.fromARGB(255, 102, 255, 168),
-                                    Color.fromARGB(255, 30, 123, 70),
-                                  ]).createShader(bounds);
-                                },
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      addItems(gI);
-                                      update(cartItems);
-                                    },
-                                    child: const Text(
-                                      'Add to Cart',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
-                ))
-          ],
+          ),
         ),
       ),
     );

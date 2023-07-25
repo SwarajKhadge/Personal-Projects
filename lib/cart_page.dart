@@ -1,12 +1,36 @@
+// ignore_for_file: no_logic_in_create_state
+
 import 'package:flutter/material.dart';
 import 'package:shopping_app/grocery_item.dart';
 
 // ignore: must_be_immutable
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
+  ValueChanged<Map<GroceryItem, int>> update;
   Map<GroceryItem, int> cartItems = {};
   double totalAmount;
-  CartPage(this.cartItems, this.totalAmount, {super.key});
+  CartPage(this.update, this.cartItems, this.totalAmount, {super.key});
+
+  @override
+  State<CartPage> createState() =>
+      CartPageState(update, cartItems, totalAmount);
+}
+
+class CartPageState extends State<CartPage> {
+  ValueChanged<Map<GroceryItem, int>> update;
+  Map<GroceryItem, int> cartItems = {};
+  double totalAmount;
+  CartPageState(this.update, this.cartItems, this.totalAmount);
   Cart cart = Cart();
+  void _update(Map<GroceryItem, int> newCartItems) {
+    setState(() {
+      cartItems = newCartItems;
+      totalAmount = 0;
+      cartItems.forEach((key, value) {
+        totalAmount = key.pricePerUnit * value;
+      });
+      update(cartItems);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +38,18 @@ class CartPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 171, 60, 255),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
           title: Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Text('Cart Items'),
               ),
             ],
           ),
@@ -33,7 +57,8 @@ class CartPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: cart.displayCart(cartItems, totalAmount, context),
+            children: cart.displayCart(
+                _update, cartItems, widget.totalAmount, context),
           ),
         ),
       ),

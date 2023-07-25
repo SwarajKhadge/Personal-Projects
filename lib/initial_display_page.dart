@@ -1,4 +1,4 @@
-import 'dart:io';
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:shopping_app/information_of_product.dart';
@@ -30,7 +30,20 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   // furniture:7;
   //All:8
   ItemList il = ItemList();
-  Color selectedColor = const Color.fromARGB(255, 0, 0, 0);
+  LinearGradient notSelectedGradient =
+      const LinearGradient(colors: [Colors.transparent, Colors.transparent]);
+  List<LinearGradient> gradients = [
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+    const LinearGradient(colors: [Colors.transparent, Colors.transparent]),
+  ];
+  Color selectedColor = Colors.black;
   Color notSelectedColor = Colors.grey;
   List<Color> temp = [
     Colors.grey,
@@ -56,9 +69,14 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     'Furniture',
     'All'
   ];
+
   void _update(Map<GroceryItem, int> cartItems) {
     setState(() {
       this.cartItems = cartItems;
+      cartItems.forEach((key, value) {
+        totalAmount = 0;
+        totalAmount += value * key.pricePerUnit;
+      });
     });
   }
 
@@ -111,6 +129,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
       displayItemList.add(Column(
         children: [
           InkWell(
+            hoverColor: Colors.transparent,
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 if (cartItems.containsKey(gI)) {
@@ -233,6 +252,8 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                                   BorderRadius.all(Radius.circular(5))),
                           child: Center(
                             child: TextButton(
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.transparent),
                               onPressed: () {
                                 addItems(gI);
                               },
@@ -260,28 +281,55 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     return displayItemList;
   }
 
+  LinearGradient selectedGradient = const LinearGradient(colors: [
+    Color.fromARGB(255, 99, 222, 152),
+    Color.fromARGB(255, 41, 175, 100),
+  ]);
   List<Widget> categoryGiver() {
     List<Widget> categoryListGiver = [];
     for (int i = 0; i < categoryList.length; i++) {
-      categoryListGiver.add(TextButton(
-          style: const ButtonStyle(
-              overlayColor:
-                  MaterialStatePropertyAll(Color.fromARGB(255, 206, 239, 255))),
-          onPressed: () {
-            selected = i;
-
-            setState(() {
-              for (int t = 0; t < temp.length; t++) {
-                if (t == selected) {
-                  temp[t] = selectedColor;
-                } else {
-                  temp[t] = notSelectedColor;
-                }
-              }
-            });
-          },
-          child: Text(categoryList[i],
-              style: TextStyle(color: temp[i], fontFamily: 'a'))));
+      categoryListGiver.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: AnimatedContainer(
+          curve: Curves.decelerate,
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            gradient: gradients[i],
+          ),
+          duration: const Duration(milliseconds: 1200),
+          child: Row(
+            children: [
+              Image.asset(
+                i != 8 ? 'images/category$i.png' : 'images/grocery.png',
+                height: 20,
+                color: temp[i],
+                width: 20,
+              ),
+              InkWell(
+                hoverColor: Colors.transparent,
+                onTap: () {
+                  selected = i;
+                  setState(() {
+                    for (int t = 0; t < temp.length; t++) {
+                      if (t == selected) {
+                        temp[t] = selectedColor;
+                        gradients[t] = selectedGradient;
+                      } else {
+                        temp[t] = notSelectedColor;
+                        gradients[t] = notSelectedGradient;
+                      }
+                    }
+                  });
+                },
+                child: Text(categoryList[i],
+                    style: TextStyle(color: temp[i], fontFamily: 'a')),
+              ),
+            ],
+          ),
+        ),
+      ));
     }
     return categoryListGiver;
   }
@@ -289,76 +337,110 @@ class StateOfShoppingApp extends State<ShoppingApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 171, 60, 255),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 56),
-              Image.asset(
-                'images/grocery.png',
-                width: 40,
-                height: 40,
-                color: const Color.fromARGB(255, 255, 239, 100),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text(
-                'EasyBuy',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 255, 239, 100),
-                    fontFamily: 'a',
-                    fontSize: 24),
-              )
-            ],
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  exit(0);
-                },
-                icon: Image.asset(
-                  'images/exit.png',
-                  color: Colors.white,
-                ))
-          ],
+      appBar: AppBar(
+        leading: Container(
+          margin: const EdgeInsets.only(left: 8.0),
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage('images/Krsna.jpg'))),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: categoryGiver(),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Column(
+          children: [],
+        ),
+        actions: [
+          SizedBox(
+            height: 150,
+            width: 150,
+            child: Stack(alignment: AlignmentDirectional.topEnd, children: [
+              Positioned(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0, right: 8),
+                  child: InkWell(
+                      splashColor: Colors.transparent,
+                      radius: 45,
+                      hoverColor: Colors.transparent,
+                      splashFactory: InkRipple.splashFactory,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                CartPage(_update,cartItems, totalAmount)));
+                      },
+                      child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(colors: [
+                                Color.fromARGB(255, 99, 222, 152),
+                                Color.fromARGB(255, 41, 175, 100),
+                              ])),
+                          child: const Icon(
+                            Icons.shopping_cart,
+                            size: 28,
+                          ))),
                 ),
               ),
-              Column(
-                children: displayItems(),
+              Visibility(
+                visible: cartItems.isNotEmpty,
+                child: Positioned(
+                    child: AnimatedContainer(
+                  curve: Curves.easeInCirc,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
+                  width: 23,
+                  height: 23,
+                  duration: const Duration(milliseconds: 900),
+                  child: Center(
+                    child: Text(
+                      cartItems.length.toString(),
+                      style:
+                          const TextStyle(color: Colors.white, fontFamily: 'a'),
+                    ),
+                  ),
+                )),
               )
-            ],
+            ]),
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: categoryGiver(),
+              ),
+            ),
+            Column(
+              children: displayItems(),
+            )
+          ],
         ),
-        floatingActionButton: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CartPage(cartItems, totalAmount)));
-          },
-          style: const ButtonStyle(
-            iconColor: MaterialStatePropertyAll(
-              Color.fromARGB(255, 255, 239, 100),
-            ),
-            elevation: MaterialStatePropertyAll(10),
-            iconSize: MaterialStatePropertyAll(26),
-            fixedSize: MaterialStatePropertyAll(Size(50, 50)),
-            shape: MaterialStatePropertyAll(CircleBorder()),
-            backgroundColor: MaterialStatePropertyAll(
-              Color.fromARGB(255, 171, 60, 255),
-            ),
-          ),
-          child: const Icon(
-            Icons.shopping_cart,
-          ),
-        ));
+      ),
+    );
+  }
+}
+
+class CustomGradient extends StatelessWidget {
+  Widget newChild;
+  CustomGradient(this.newChild, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ShaderMask(shaderCallback: (rect) {
+      return const LinearGradient(colors: [
+        Color.fromARGB(255, 99, 222, 152),
+        Color.fromARGB(255, 41, 175, 100),
+      ]).createShader(rect);
+    });
   }
 }

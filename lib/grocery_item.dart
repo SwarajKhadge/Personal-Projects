@@ -1,5 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:shopping_app/buy_page.dart';
+// import 'package:shopping_app/cart_page.dart';
 
 import 'package:shopping_app/item_list.dart';
 
@@ -14,23 +17,18 @@ class GroceryItem {
 }
 
 class Cart {
+  ValueChanged<Map<GroceryItem, int>>? update;
+
   ItemList itemList = ItemList();
   double finalAmount = 0.0;
   double taxAmount = 0.0;
   List<Widget> returnDisplayCart = [];
-  List<Widget> displayCart(
-      Map<GroceryItem, int> cartItems, finalAmount, BuildContext context) {
+  List<Widget> displayCart(update, Map<GroceryItem, int> cartItems, finalAmount,
+      BuildContext context) {
     Map<int, double> getTax = itemList.taxPercentage;
     Map<GroceryItem, int> finalCartItems = cartItems;
     returnDisplayCart.clear();
-    returnDisplayCart.add(Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Text('Cart Amount: ${finalAmount.toStringAsFixed(2)}',
-          style: const TextStyle(
-              fontFamily: 'a',
-              color: Color.fromARGB(255, 171, 60, 255),
-              fontSize: 18)),
-    ));
+
     cartItems.forEach((key, value) {
       taxAmount =
           taxAmount + value * key.pricePerUnit * getTax[key.category]! / 100;
@@ -49,6 +47,27 @@ class Cart {
                       '${key.name}, Quantity:$value  Amount:${(value * key.pricePerUnit).toInt()}  Tax Amount:${(value * key.pricePerUnit * getTax[key.category]! / 100).toStringAsFixed(1)}',
                       style: const TextStyle(fontFamily: 'a'),
                     ),
+                    Center(
+                      child: IconButton(
+                          splashRadius: 24,
+                          onPressed: () {
+                            cartItems.remove(key);
+                            finalAmount = 0;
+                            cartItems.forEach((key, value) {
+                              taxAmount = taxAmount +
+                                  value *
+                                      key.pricePerUnit *
+                                      getTax[key.category]! /
+                                      100;
+                              finalAmount += taxAmount;
+                            });
+                            update(cartItems);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            size: 18,
+                          )),
+                    )
                   ],
                 ),
               ),
@@ -105,5 +124,24 @@ class Cart {
       ),
     );
     return returnDisplayCart;
+  }
+}
+
+class CustomGradient extends StatelessWidget {
+  Widget newChild;
+  CustomGradient(this.newChild, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ShaderMask(
+      shaderCallback: (rect) {
+        return const LinearGradient(colors: [
+          Color.fromARGB(255, 99, 222, 152),
+          Color.fromARGB(255, 41, 175, 100),
+        ]).createShader(rect);
+      },
+      child: newChild,
+    );
   }
 }
