@@ -276,77 +276,178 @@ class ItemList {
 
   List<GroceryItem> completeItemList = [];
   List<GroceryItem> toBeShownItemList = [];
-  List<GroceryItem> listGiver(int a) {
-    switch (a) {
-      case 0:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 0) {
-            toBeShownItemList.add(gI);
+  List<GroceryItem> listGiver(int a, int minimum, int maximum) {
+    if (minimum != maximum) {
+      switch (a) {
+        case 0:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 0 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
+          return toBeShownItemList;
 
-      case 1:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 1) {
-            toBeShownItemList.add(gI);
+        case 1:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 1 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 2:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 2) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 2:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 2 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 3:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 3) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 3:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 3 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 4:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 4) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 4:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 4 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 5:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 5) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 5:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 5 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 6:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 6) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 6:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 6 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
-      case 7:
-        toBeShownItemList.clear();
-        for (GroceryItem gI in completeItemList) {
-          if (gI.category == 7) {
-            toBeShownItemList.add(gI);
+          return toBeShownItemList;
+        case 7:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 7 &&
+                gI.pricePerUnit > minimum &&
+                gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            }
           }
-        }
-        return toBeShownItemList;
+          return toBeShownItemList;
 
-      default:
-        toBeShownItemList.clear();
-        return completeItemList;
+        default:
+          toBeShownItemList.clear();
+          for (var gI in completeItemList) {
+            if (gI.pricePerUnit > minimum && gI.pricePerUnit < maximum) {
+              toBeShownItemList.add(gI);
+            } 
+          }
+          return toBeShownItemList;
+      }
+    } else {
+      switch (a) {
+        case 0:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 0) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+
+        case 1:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 1) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 2:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 2) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 3:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 3) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 4:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 4) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 5:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 5) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 6:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 6) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+        case 7:
+          toBeShownItemList.clear();
+          for (GroceryItem gI in completeItemList) {
+            if (gI.category == 7) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+
+        default:
+          toBeShownItemList.clear();
+          for (var gI in completeItemList) {
+            if (true) {
+              toBeShownItemList.add(gI);
+            }
+          }
+          return toBeShownItemList;
+      }
     }
   }
 }
+

@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:shopping_app/information_of_product.dart';
 
@@ -16,6 +15,14 @@ class ShoppingApp extends StatefulWidget {
 }
 
 class StateOfShoppingApp extends State<ShoppingApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    textEditingController.addListener(() => setState(() {}));
+  }
+
+  void searchAccordingtoName() {}
   Map<GroceryItem, int> cartItems = {};
   Cart cart = Cart();
   double totalAmount = 0;
@@ -122,9 +129,220 @@ class StateOfShoppingApp extends State<ShoppingApp> {
     }
   }
 
+  int minimum = -1, maximum = -1;
+  List<GroceryItem> newRequiredItemList = [];
+  void newRequiredItemGiver(int minimum, int maximum) {
+    this.minimum = minimum;
+    this.maximum = maximum;
+  }
+
+  TextEditingController textEditingController = TextEditingController();
+  String searchProduct = '';
+  OutlineInputBorder textFieldKa = const OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(30)),
+    borderSide: BorderSide(
+      color: Colors.white,
+      width: 3,
+    ),
+  );
   List<Widget> displayItems() {
     List<Widget> displayItemList = [];
-    List<GroceryItem> requiredList = il.listGiver(selected);
+    List<GroceryItem> requiredList = il.listGiver(selected, minimum, maximum);
+    displayItemList.add(
+      Row(
+        children: [
+          Expanded(
+            flex: 9,
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  searchProduct = value;
+                });
+              },
+              controller: textEditingController,
+              decoration: InputDecoration(
+                  hintText: 'Kya Chahiye Apko?',
+                  border: textFieldKa,
+                  enabledBorder: textFieldKa,
+                  focusedBorder: textFieldKa),
+            ),
+          ),
+          SizedBox(
+            width: 120,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text(
+                            'Filter by Price',
+                            style: TextStyle(
+                                fontFamily: 'a',
+                                fontSize: 16,
+                                color: Colors.black),
+                          ),
+                          content: SizedBox(
+                            height: 200,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 300,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(12))),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        newRequiredItemGiver(0, 101);
+                                      });
+                                    },
+                                    child: const Text(
+                                      'Upto 100',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(12))),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        newRequiredItemGiver(101, 201);
+                                      });
+                                    },
+                                    child: const Text(
+                                      '100-200',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(12))),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        newRequiredItemGiver(202, 303);
+                                      });
+                                    },
+                                    child: const Text(
+                                      '200-300',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(12))),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        newRequiredItemGiver(303, 1000000);
+                                      });
+                                    },
+                                    child: const Text(
+                                      'above 300',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(12))),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        newRequiredItemGiver(0, 100000000);
+                                      });
+                                    },
+                                    child: const Text(
+                                      'All',
+                                      style: TextStyle(
+                                          fontFamily: 'a',
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(colors: [
+                        Color.fromARGB(255, 99, 222, 152),
+                        Color.fromARGB(255, 41, 175, 100),
+                      ]),
+                      borderRadius: BorderRadius.circular(12)),
+                  height: 50,
+                  width: 200,
+                  child: const Icon(Icons.filter_list),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
     for (GroceryItem gI in requiredList) {
       displayItemList.add(Column(
         children: [
@@ -349,8 +567,20 @@ class StateOfShoppingApp extends State<ShoppingApp> {
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Column(
-          children: [],
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Hi,',
+              style: TextStyle(
+                  fontFamily: 'a', fontSize: 12, color: Colors.black54),
+            ),
+            Text(
+              'Krsna Yadav',
+              style:
+                  TextStyle(fontFamily: 'a', fontSize: 16, color: Colors.black),
+            ),
+          ],
         ),
         actions: [
           SizedBox(
@@ -368,7 +598,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                CartPage(_update,cartItems, totalAmount)));
+                                CartPage(_update, cartItems, totalAmount)));
                       },
                       child: Container(
                           height: 45,
