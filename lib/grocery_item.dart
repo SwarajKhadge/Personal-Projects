@@ -97,28 +97,31 @@ class Cart {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton.icon(
-              style: TextButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 171, 60, 255)),
-              icon: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Color.fromARGB(255, 255, 239, 100),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) =>
-                            BuyPage(finalAmount, taxAmount, finalCartItems))));
-              },
-              label: const Text(
-                'Buy Now',
-                style: TextStyle(
-                    fontFamily: 'a',
-                    color: Color.fromARGB(255, 255, 239, 100),
-                    fontSize: 18),
-              ),
-            ),
+            InkWell(
+                splashColor: Colors.green,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => BuyPage(
+                              finalAmount, taxAmount, finalCartItems))));
+                },
+                child: Container(
+                  height: 30,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      gradient: const LinearGradient(colors: [
+                        Color.fromARGB(255, 99, 222, 152),
+                        Color.fromARGB(255, 41, 175, 100),
+                      ])),
+                  child: const Center(
+                    child: Text(
+                      'Buy Now',
+                      style: TextStyle(fontFamily: 'a', color: Colors.white),
+                    ),
+                  ),
+                )),
           ],
         ),
       ),
@@ -133,7 +136,6 @@ class CustomGradient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return ShaderMask(
       shaderCallback: (rect) {
         return const LinearGradient(colors: [

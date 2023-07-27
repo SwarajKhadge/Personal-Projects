@@ -68,17 +68,21 @@ class BuyPage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
+              elevation: 0,
               centerTitle: true,
               title: const Text(
                 'Buying Page',
                 style: TextStyle(
                     fontFamily: 'a',
-                    color: Color.fromARGB(255, 255, 239, 100),
+                    color: Color.fromARGB(255, 168, 250, 171),
                     fontSize: 18),
               ),
-              backgroundColor: const Color.fromARGB(255, 171, 60, 255),
+              backgroundColor: Colors.transparent,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -99,19 +103,17 @@ class BuyPage extends StatelessWidget {
                         child: Row(
                           children: [
                             const SizedBox(width: 56),
-                            Image.asset(
-                              'images/grocery.png',
-                              width: 40,
-                              height: 40,
-                              color: const Color.fromARGB(255, 171, 60, 255),
-                            ),
+                            Image.asset('images/grocery.png',
+                                width: 40,
+                                height: 40,
+                                color: const Color.fromARGB(255, 114, 219, 118)),
                             const SizedBox(
                               width: 10,
                             ),
                             const Text(
                               'EasyBuy',
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 171, 60, 255),
+                                  color: Color.fromARGB(255, 114, 219, 118),
                                   fontFamily: 'a',
                                   fontSize: 24),
                             ),
@@ -149,21 +151,21 @@ class BuyPage extends StatelessWidget {
                             'Total Amount: $t ',
                             style: const TextStyle(
                                 fontFamily: 'a',
-                                color: Color.fromARGB(255, 171, 60, 255),
+                                color: Color.fromARGB(255, 114, 219, 118),
                                 fontSize: 18),
                           ),
                           Text(
                             'Tax Amount: ${taxAmount.toStringAsFixed(2)}',
                             style: const TextStyle(
                                 fontFamily: 'a',
-                                color: Color.fromARGB(255, 171, 60, 255),
+                                color: Color.fromARGB(255, 114, 219, 118),
                                 fontSize: 18),
                           ),
                           Text(
                             'Final Amount: ${finalAmount.toStringAsFixed(2)} ',
                             style: const TextStyle(
                                 fontFamily: 'a',
-                                color: Color.fromARGB(255, 171, 60, 255),
+                                color: Color.fromARGB(255, 114, 219, 118),
                                 fontSize: 18),
                           ),
                           const PopUp(),
@@ -237,7 +239,7 @@ class BuyPage extends StatelessWidget {
 //                       'Total Amount: $finalAmount',
 //                       style: const TextStyle(
 //                           fontFamily: 'a',
-//                           color: Color.fromARGB(255, 171, 60, 255),
+//                           color: Color.fromARGB(255, 114, 219, 118) ,
 //                           fontSize: 18),
 //                     ),
 //                   ],
@@ -249,7 +251,7 @@ class BuyPage extends StatelessWidget {
 //                       'Tax Amount: $taxAmount',
 //                       style: const TextStyle(
 //                           fontFamily: 'a',
-//                           color: Color.fromARGB(255, 171, 60, 255),
+//                           color: Color.fromARGB(255, 114, 219, 118) ,
 //                           fontSize: 18),
 //                     ),
                     

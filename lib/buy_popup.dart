@@ -39,56 +39,79 @@ class StateofPopUp extends State<PopUp> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextButton.icon(
-          style: TextButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 171, 60, 255)),
-          icon: const Icon(
-            Icons.wallet_outlined,
-            color: Color.fromARGB(255, 255, 239, 100),
-          ),
-          onPressed: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                    title: const Text(
-                      'Ready to Order?',
-                      style: TextStyle(fontFamily: 'a', fontSize: 12),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            flag1 = true;
-                            startTimer();
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Yes',
-                            style: TextStyle(
-                                fontFamily: 'a',
-                                fontSize: 12,
-                                color: Color.fromARGB(255, 171, 60, 255))),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('No',
-                            style: TextStyle(
-                                fontFamily: 'a',
-                                fontSize: 12,
-                                color: Color.fromARGB(255, 171, 60, 255))),
-                      ),
-                    ]);
-              }),
-          label: const Text(
-            'Make Payment',
-            style: TextStyle(
-                fontFamily: 'a',
-                color: Color.fromARGB(255, 255, 239, 100),
-                fontSize: 18),
-          ),
-        ),
+        InkWell(
+            splashColor: Colors.green,
+            onTap: () {
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        title: const Text(
+                          'Ready to Order?',
+                          style: TextStyle(fontFamily: 'a', fontSize: 12),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                flag1 = true;
+                                startTimer();
+                              });
+                              Navigator.pop(context);
+                            },
+                            child: ShaderMask(
+                              shaderCallback: (Rect rect) {
+                                return const LinearGradient(colors: [
+                                  Color.fromARGB(255, 99, 222, 152),
+                                  Color.fromARGB(255, 41, 175, 100),
+                                ]).createShader(rect);
+                              },
+                              child: const Text('Yes',
+                                  style: TextStyle(
+                                    fontFamily: 'a',
+                                    fontSize: 12,
+                                    //  color: Color.fromARGB(255, 171, 60, 255),
+                                  )),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: ShaderMask(
+                              shaderCallback: (rect) {
+                                return const LinearGradient(colors: [
+                                  Color.fromARGB(255, 99, 222, 152),
+                                  Color.fromARGB(255, 41, 175, 100),
+                                ]).createShader(rect);
+                              },
+                              child: const Text('No',
+                                  style: TextStyle(
+                                    fontFamily: 'a',
+                                    fontSize: 12,
+                                    //  color: Color.fromARGB(255, 171, 60, 255),
+                                  )),
+                            ),
+                          ),
+                        ]);
+                  });
+            },
+            child: Container(
+              height: 30,
+              width: 300,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  gradient: const LinearGradient(colors: [
+                    Color.fromARGB(255, 99, 222, 152),
+                    Color.fromARGB(255, 41, 175, 100),
+                  ])),
+              child: const Center(
+                child: Text(
+                  'Make Payment',
+                  style: TextStyle(fontFamily: 'a', color: Colors.white),
+                ),
+              ),
+            )),
         Visibility(
           visible: flag1,
           child: Column(
