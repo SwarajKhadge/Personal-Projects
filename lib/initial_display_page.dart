@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:shopping_app/information_of_product.dart';
 import 'cart_page.dart';
+import 'display_coupun.dart';
 import 'grocery_item.dart';
 import 'item_list.dart';
 
@@ -210,6 +211,22 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                             const SizedBox(
                               height: 8,
                             ),
+                            Visibility(
+                                visible: true,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(30, 30),
+                                        shape: const CircleBorder(),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 61, 197, 122)),
+                                    onPressed: () {
+                                      removeItems(gI);
+                                    },
+                                    child: const Icon(
+                                      Icons.remove,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ))),
                           ],
                         ),
                       ],
@@ -524,190 +541,185 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                   ),
                 ),
                 SizedBox(
-                    width: 120,
-                    child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: const Text(
-                                        'Filter by Price',
-                                        style: TextStyle(
-                                            fontFamily: 'a',
-                                            fontSize: 16,
-                                            color: Colors.black),
-                                      ),
-                                      content: SizedBox(
-                                        height: 200,
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              width: 300,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.green),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12))),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                  setState(() {
-                                                    newRequiredItemGiver(
-                                                        0, 101);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  'Upto 100',
-                                                  style: TextStyle(
-                                                      fontFamily: 'a',
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            SizedBox(
-                                              width: 300,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.green),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12))),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Navigator.pop(context);
-                                                    newRequiredItemGiver(
-                                                        101, 201);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  '100-200',
-                                                  style: TextStyle(
-                                                      fontFamily: 'a',
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            SizedBox(
-                                              width: 300,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.green),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12))),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Navigator.pop(context);
-                                                    newRequiredItemGiver(
-                                                        202, 303);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  '200-300',
-                                                  style: TextStyle(
-                                                      fontFamily: 'a',
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            SizedBox(
-                                              width: 300,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.green),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12))),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Navigator.pop(context);
-                                                    newRequiredItemGiver(
-                                                        303, 1000000);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  'above 300',
-                                                  style: TextStyle(
-                                                      fontFamily: 'a',
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            SizedBox(
-                                              width: 300,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.green),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12))),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Navigator.pop(context);
-                                                    newRequiredItemGiver(
-                                                        0, 100000000);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  'All',
-                                                  style: TextStyle(
-                                                      fontFamily: 'a',
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                  width: 120,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  'Filter by Price',
+                                  style: TextStyle(
+                                      fontFamily: 'a',
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                                content: SizedBox(
+                                  height: 200,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 300,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12))),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              newRequiredItemGiver(0, 101);
+                                            });
+                                          },
+                                          child: const Text(
+                                            'Upto 100',
+                                            style: TextStyle(
+                                                fontFamily: 'a',
+                                                fontSize: 12,
+                                                color: Colors.black),
+                                          ),
                                         ),
                                       ),
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(colors: [
-                                    Color.fromARGB(255, 99, 222, 152),
-                                    Color.fromARGB(255, 41, 175, 100),
-                                  ]),
-                                  borderRadius: BorderRadius.circular(26)),
-                              height: 50,
-                              width: 200,
-                              child: const Icon(Icons.filter_list),
-                            )))),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: 300,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12))),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                              newRequiredItemGiver(101, 201);
+                                            });
+                                          },
+                                          child: const Text(
+                                            '100-200',
+                                            style: TextStyle(
+                                                fontFamily: 'a',
+                                                fontSize: 12,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: 300,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12))),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                              newRequiredItemGiver(202, 303);
+                                            });
+                                          },
+                                          child: const Text(
+                                            '200-300',
+                                            style: TextStyle(
+                                                fontFamily: 'a',
+                                                fontSize: 12,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: 300,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12))),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                              newRequiredItemGiver(
+                                                  303, 1000000);
+                                            });
+                                          },
+                                          child: const Text(
+                                            'above 300',
+                                            style: TextStyle(
+                                                fontFamily: 'a',
+                                                fontSize: 12,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: 300,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12))),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                              newRequiredItemGiver(
+                                                  0, 100000000);
+                                            });
+                                          },
+                                          child: const Text(
+                                            'All',
+                                            style: TextStyle(
+                                                fontFamily: 'a',
+                                                fontSize: 12,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(colors: [
+                              Color.fromARGB(255, 99, 222, 152),
+                              Color.fromARGB(255, 41, 175, 100),
+                            ]),
+                            borderRadius: BorderRadius.circular(26)),
+                        height: 50,
+                        width: 200,
+                        child: const Icon(Icons.filter_list),
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 40),
               ],
             ),
@@ -719,6 +731,10 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                 children: categoryGiver(),
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(height: 300, child: const DisplayCoupun()),
             SizedBox(
               height: 300,
               child: SingleChildScrollView(
