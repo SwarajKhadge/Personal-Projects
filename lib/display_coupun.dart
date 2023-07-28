@@ -34,7 +34,7 @@ class _DisplayCoupunState extends State<DisplayCoupun> {
           return Container(
             width: 500,
             height: 150,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: colorsList[i++]),

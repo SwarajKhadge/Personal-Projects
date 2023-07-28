@@ -734,7 +734,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(height: 300, child: const DisplayCoupun()),
+            const SizedBox(height: 300, child: DisplayCoupun()),
             SizedBox(
               height: 300,
               child: SingleChildScrollView(
