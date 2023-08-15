@@ -53,7 +53,7 @@ class _DisplayCoupunState extends State<DisplayCoupun> {
                           fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      'Coupon Code: ${CoupunList.coupunList[index].text} ',
+                      'Coupon Code: ${CoupunList.coupunList[index].text}',
                       style: const TextStyle(
                           color: Colors.green,
                           fontFamily: 'a',

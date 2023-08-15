@@ -156,7 +156,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
       displayItemList.add(Padding(
         padding: const EdgeInsets.all(12),
         child: SizedBox(
-          height: 260,
+          height: 240,
           width: 198,
           child: InkWell(
             onTap: () {
@@ -166,8 +166,6 @@ class StateOfShoppingApp extends State<ShoppingApp> {
               }));
             },
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
               elevation: 6,
               child: AnimatedContainer(
                 decoration:
@@ -196,7 +194,6 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                                 visible: true,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        minimumSize: const Size(30, 30),
                                         shape: const CircleBorder(),
                                         backgroundColor: const Color.fromARGB(
                                             255, 61, 197, 122)),
@@ -206,27 +203,24 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                                     child: const Icon(
                                       Icons.add,
                                       color: Colors.white,
-                                      size: 24,
                                     ))),
                             const SizedBox(
                               height: 8,
                             ),
-                            Visibility(
-                                visible: true,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        minimumSize: const Size(30, 30),
-                                        shape: const CircleBorder(),
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 61, 197, 122)),
-                                    onPressed: () {
-                                      removeItems(gI);
-                                    },
-                                    child: const Icon(
-                                      Icons.remove,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ))),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(30, 30),
+                                    shape: const CircleBorder(),
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 61, 197, 122)),
+                                onPressed: () {
+                                  removeItems(gI);
+                                },
+                                child: const Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                  size: 24,
+                                )),
                           ],
                         ),
                       ],
@@ -387,6 +381,20 @@ class StateOfShoppingApp extends State<ShoppingApp> {
                             const SizedBox(
                               height: 8,
                             ),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(30, 30),
+                                    shape: const CircleBorder(),
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 61, 197, 122)),
+                                onPressed: () {
+                                  removeItems(gI);
+                                },
+                                child: const Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                  size: 24,
+                                )),
                           ],
                         ),
                       ],
