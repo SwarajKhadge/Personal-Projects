@@ -157,7 +157,7 @@ class StateOfShoppingApp extends State<ShoppingApp> {
         padding: const EdgeInsets.all(12),
         child: SizedBox(
           height: 240,
-          width: 198,
+          width: 220,
           child: InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
